@@ -83,6 +83,11 @@ app.get('/blogs',(req,res)=>{
     .catch(error=>console.log(error));
 })
 
+app.get("/blogs/create", (req, res) => {
+  res.render("create", { title: "Create a new blog" });
+});
+
+
 app.post('/blogs',(req,res)=>{
   // console.log(req.body);
   const blog = new Blog(req.body);
@@ -109,9 +114,6 @@ app.delete('/blogs/:id',(req,res)=>{
   .catch(error=>console.log(error))
 })
 
-app.get("/blogs/create", (req, res) => {
-  res.render("create", { title: "Create a new blog" });
-});
 
 // route for redirect
 app.get("/aboutus", (req, res) => {
