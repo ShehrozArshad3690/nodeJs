@@ -7,8 +7,10 @@
       <h3>All Blogs</h3>
       <% if(Blogs.length>0){ %> 
         <%Blogs.forEach(blog=>{ %>
+          <a class="single" href="/blogs/<%=blog._id%>">
             <h2 class="title"><%= blog.title %></h2>
             <p class="snippet"><%= blog.snippet %></p>
+          </a>
         <% })%>
       <% }else{ %>
         <p>There is no blog to display....</p>

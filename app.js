@@ -2,12 +2,13 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const Blog = require("./models/blog");
+const { result } = require("lodash");
 
 //express app
 const app = express();
 
 //connect to mongo db
-const dbURI = "mongodb+srv://Shehroz29:DE7OhqpZz0jUP6TV@nodetutes.pqnqv05.mongodb.net/";
+const dbURI = "mongodb+srv://Shehroz29:DE7OhqpZz0jUP6TV@nodetutes.pqnqv05.mongodb.net/test";
 mongoose
   .connect(dbURI)
   .then((result) => app.listen(8080))
@@ -28,7 +29,8 @@ app.set("view engine", "ejs");
 
 //morgan automated logger middleware
 app.use(morgan("dev"));
-
+// this middleware passes the form data into an object so that POST req can use it(we can simply say that this middleware is for accepting form data)
+app.use(express.urlencoded({extended:true}));
 //static middleware
 app.use(express.static("public"));
 
@@ -79,6 +81,32 @@ app.get('/blogs',(req,res)=>{
         res.render('index',{title: 'All Blogs',Blogs:result})
     })
     .catch(error=>console.log(error));
+})
+
+app.post('/blogs',(req,res)=>{
+  // console.log(req.body);
+  const blog = new Blog(req.body);
+  blog.save()
+  .then(result=>res.redirect('/blogs'))
+  .catch(error=>console.log(error));
+})
+
+app.get('/blogs/:id',(req,res)=>{
+  const id = req.params.id;
+  Blog.findById(id)
+  .then(result=>{
+    res.render('details',{blog:result,title:'Blog Details'})
+  })
+  .catch(error=>console.log(error));
+})
+
+app.delete('/blogs/:id',(req,res)=>{
+  const id= req.params.id;
+  Blog.findByIdAndDelete(id)
+  .then(result=>{
+    res.json({redirect:'/blogs'});
+  })
+  .catch(error=>console.log(error))
 })
 
 app.get("/blogs/create", (req, res) => {
