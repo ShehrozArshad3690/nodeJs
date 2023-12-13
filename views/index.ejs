@@ -4,7 +4,7 @@
   <body>
     <%-include('./partials/nav.ejs')%>
     <div class="blog-content">
-      <h3>All Blogs</h3>
+      <h1>All Blogs</h1><br><br>
       <% if(Blogs.length>0){ %> 
         <%Blogs.forEach(blog=>{ %>
           <a class="single" href="/blogs/<%=blog._id%>">
