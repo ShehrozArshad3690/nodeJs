@@ -71,6 +71,15 @@ h3 {
 }
 
 /* index styles */
+.blog-content a{
+    display: block;
+    margin: 40px 0;
+    padding-left: 30px;
+    border-left: 6px solid crimson;
+  }
+  .blog-content a:hover h2{
+    color: crimson;
+  }
 
 /* details styles */
 .details{
